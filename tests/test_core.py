@@ -1,8 +1,7 @@
-import math
 import unittest
 
-from alternative_neuron import ActivePoker, AlternativeNeuron, PokeWorld, SlowStructure
-from run_gates import gate0, gate1, gate2, gate3
+from alternative_neuron import ActivePoker, PokeWorld, SlowStructure
+from run_gates import gate0, gate1, gate2, gate3, gate4
 
 
 class AlternativeNeuronTests(unittest.TestCase):
@@ -48,6 +47,14 @@ class AlternativeNeuronTests(unittest.TestCase):
             result["active_memory_adapted"]["probe_cost"],
             result["active_memory_frozen"]["probe_cost"],
         )
+
+    def test_poke_semantics_can_be_learned_from_scalar_calibration(self):
+        result = gate4()
+        self.assertTrue(result["pass"])
+        self.assertEqual(result["active_test_accuracy"], 1.0)
+        self.assertEqual(result["mean_active_pokes_per_context"], 3.0)
+        self.assertLessEqual(result["shuffled_calibration_accuracy"], 0.125)
+        self.assertGreaterEqual(result["total_cost_reduction_x"], 2.9)
 
 
 if __name__ == "__main__":
