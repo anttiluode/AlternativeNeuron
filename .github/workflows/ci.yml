@@ -27,3 +27,5 @@ jobs:
         run: python -m experiments.gate5b_cost_aware_attacker --check
       - name: Gate 6 - world vs self attribution
         run: python -m experiments.gate6_self_world_attribution --check
+      - name: Gate 6B - self/world nonidentifiability
+        run: python -m experiments.gate6b_self_world_nonidentifiability --check
