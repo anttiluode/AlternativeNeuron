@@ -35,3 +35,5 @@ jobs:
         run: python -m experiments.gate7a_signal_ecology_allocation --check
       - name: Gate 7B - temporal causal separation
         run: python -m experiments.gate7b_temporal_causal_separation --check
+      - name: Gate 8A - WidePresent state aliasing
+        run: python -m experiments.gate8a_wide_present --check
