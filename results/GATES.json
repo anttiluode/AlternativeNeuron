@@ -1,6 +1,6 @@
 {
   "all_pass": true,
-  "claim_boundary": "Mechanism toy only. The response codebook is supplied, HOME sees only a coarse group, and the silent-switch failure is intentional. No claim of biological neuron equivalence, general intelligence, or subjective experience.",
+  "claim_boundary": "Mechanism toy only. HOME sees only a coarse group; the silent-switch failure is intentional. Gate 4 learns the poke-response model from scalar consequences but receives context labels during calibration. No claim of biological neuron equivalence, general intelligence, or subjective experience.",
   "gate0_intervention_as_sense": {
     "active_poke_accuracy": 1.0,
     "classification": "STATE_DEPENDENT_INTERVENTION_RESCUES_PASSIVE_AMBIGUITY",
@@ -99,5 +99,20 @@
     "pass": true,
     "passive_only_accuracy": 0.125
   },
-  "schema": "alternative-neuron-gates-v1"
+  "gate4_learned_poke_semantics": {
+    "active_test_accuracy": 1.0,
+    "active_test_pokes": 384,
+    "active_total_including_calibration": 576,
+    "boundary": "Calibration is anchored by supplied context labels. This learns poke semantics but does not discover its own ontology or detect a genuinely novel context.",
+    "calibration_pokes": 192,
+    "classification": "SCALAR_CALIBRATION_LEARNS_POKE_SEMANTICS_AND_ACTIVE_REUSE_AMORTIZES_IT",
+    "exhaustive_total_including_calibration": 1728,
+    "mean_active_pokes_per_context": 3.0,
+    "pass": true,
+    "shuffled_calibration_accuracy": 0.125,
+    "shuffled_calibration_pokes": 384,
+    "test_repetitions": 8,
+    "total_cost_reduction_x": 3.0
+  },
+  "schema": "alternative-neuron-gates-v2"
 }
