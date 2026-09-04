@@ -39,3 +39,5 @@ jobs:
         run: python -m experiments.gate8a_wide_present --check
       - name: Gate 8B - coordinate-invariant dynamical object
         run: python -m experiments.gate8b_coordinate_invariant_object --check
+      - name: Gate 8C - nonlinear attractor basins
+        run: python -m experiments.gate8c_nonlinear_attractor_basins --check
