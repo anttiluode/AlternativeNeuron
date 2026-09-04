@@ -3,14 +3,17 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 from pathlib import Path
 
 from alternative_neuron import (
     ActivePoker,
     AlternativeNeuron,
+    LearnedPoker,
     PokeWorld,
     SlowStructure,
+    UnknownResponseWorld,
+    calibrate_labeled,
+    shuffled_calibration,
     silent_switch_sequence,
     visible_event_sequence,
 )
@@ -211,24 +214,84 @@ def gate3(world: PokeWorld, adapted: SlowStructure, shuffled: SlowStructure) -> 
     return result
 
 
+def gate4() -> dict:
+    """Remove Gate 0's preloaded poke codebook by learning it from scalar trials."""
+    world = UnknownResponseWorld(seed=20260904, n_actions=12)
+    calibration = calibrate_labeled(world)
+    poker = LearnedPoker(world, calibration)
+
+    correct: list[bool] = []
+    pokes = 0
+    repetitions = 8
+    for _ in range(repetitions):
+        for context in range(16):
+            result = poker.identify(context)
+            correct.append(result.predicted == context)
+            pokes += len(result.actions)
+
+    bad = LearnedPoker(world, shuffled_calibration(calibration, seed=77))
+    bad_correct: list[bool] = []
+    bad_pokes = 0
+    for _ in range(repetitions):
+        for context in range(16):
+            result = bad.identify(context)
+            bad_correct.append(result.predicted == context)
+            bad_pokes += len(result.actions)
+
+    exhaustive_test_pokes = repetitions * 16 * world.n_actions
+    active_total = calibration.scalar_pokes + pokes
+    exhaustive_total = calibration.scalar_pokes + exhaustive_test_pokes
+
+    out = {
+        "calibration_pokes": calibration.scalar_pokes,
+        "test_repetitions": repetitions,
+        "active_test_accuracy": accuracy(correct),
+        "active_test_pokes": pokes,
+        "mean_active_pokes_per_context": pokes / (repetitions * 16),
+        "shuffled_calibration_accuracy": accuracy(bad_correct),
+        "shuffled_calibration_pokes": bad_pokes,
+        "active_total_including_calibration": active_total,
+        "exhaustive_total_including_calibration": exhaustive_total,
+        "total_cost_reduction_x": exhaustive_total / active_total,
+    }
+    out["pass"] = (
+        out["active_test_accuracy"] == 1.0
+        and out["mean_active_pokes_per_context"] <= 3.0
+        and out["shuffled_calibration_accuracy"] <= 0.125
+        and out["total_cost_reduction_x"] >= 2.9
+    )
+    out["classification"] = (
+        "SCALAR_CALIBRATION_LEARNS_POKE_SEMANTICS_AND_ACTIVE_REUSE_AMORTIZES_IT"
+        if out["pass"]
+        else "GATE4_FAILED"
+    )
+    out["boundary"] = (
+        "Calibration is anchored by supplied context labels. This learns poke semantics but does not "
+        "discover its own ontology or detect a genuinely novel context."
+    )
+    return out
+
+
 def run_all() -> dict:
     world = PokeWorld()
     g0 = gate0(world)
     g1 = gate1()
     g2, adapted, shuffled = gate2(world)
     g3 = gate3(world, adapted, shuffled)
-    all_pass = all(gate["pass"] for gate in (g0, g1, g2, g3))
+    g4 = gate4()
+    all_pass = all(gate["pass"] for gate in (g0, g1, g2, g3, g4))
     return {
-        "schema": "alternative-neuron-gates-v1",
+        "schema": "alternative-neuron-gates-v2",
         "gate0_intervention_as_sense": g0,
         "gate1_medium_memory": g1,
         "gate2_slow_structure": g2,
         "gate3_composition": g3,
+        "gate4_learned_poke_semantics": g4,
         "all_pass": all_pass,
         "claim_boundary": (
-            "Mechanism toy only. The response codebook is supplied, HOME sees only a coarse group, "
-            "and the silent-switch failure is intentional. No claim of biological neuron equivalence, "
-            "general intelligence, or subjective experience."
+            "Mechanism toy only. HOME sees only a coarse group; the silent-switch failure is intentional. "
+            "Gate 4 learns the poke-response model from scalar consequences but receives context labels during "
+            "calibration. No claim of biological neuron equivalence, general intelligence, or subjective experience."
         ),
     }
 
