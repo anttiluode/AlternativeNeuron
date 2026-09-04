@@ -43,7 +43,7 @@ and a slowly changing transport budget.
 
 ## Three timescales
 
-The first executable toy has three explicit state classes.
+The executable toy has three explicit state classes.
 
 ### Fast — exploratory state
 
@@ -80,6 +80,11 @@ from the operator/plasticity experiments. Its role here is to close the loop:
 experience -> probe traffic -> structure -> future sampling policy
 ```
 
+The word "memory" therefore means two different persistent consequences here:
+medium memory keeps a resolved fact, while slow memory changes the operator
+through which later facts are acquired. The slow state is closer to
+**history-made-routing** than to a database.
+
 ## The PAC analogy, carefully
 
 Phase-amplitude coupling (PAC) and PCA are unrelated despite the easy acronym
@@ -90,35 +95,136 @@ The fast/medium/slow split here is **not PAC**. Nothing in the current code is a
 oscillator and there is no phase-amplitude statistic. PAC is nevertheless a
 useful biological reminder that different timescales can be coupled rather
 than independent. A future rhythmic implementation could ask whether a slow
-structural or contextual variable gates the gain/budget of fast exploratory
-pulses, but that would be a new experiment, not an interpretation of these
-gates.
+contextual or structural rhythm gates the gain, threshold, or budget of fast
+exploratory pulses. That would be a new experiment, not an interpretation of
+these gates.
 
 ## The qualia / degree-of-freedom thought, fenced
 
 Adding a poke channel changes the machine's epistemic degrees of freedom.
-Instead of only receiving `what happened`, it can also acquire
-`what happens if I act here`.
+Instead of only receiving
 
-That is a legitimate computational distinction and a plausible place to study
-self/world, agency, counterfactual sensing, or sensorimotor contingencies.
+```text
+what happened?
+```
+
+it can also acquire
+
+```text
+what happens if I act here?
+```
+
+The second signal is counterfactual and action-conditioned. That is a legitimate
+computational distinction and a plausible place to study self/world separation,
+agency, active inference, haptic-style sensing, or sensorimotor contingencies.
+
 Nothing in this repository measures subjective experience, phenomenology, or
-qualia. The word should not be promoted from philosophical motivation into an
-experimental conclusion.
+qualia. The philosophical connection can motivate which degrees of freedom we
+test; it cannot be promoted into an empirical conclusion.
 
-## What Gate 0 deliberately cheats on
+## Gate 4 removes one cheat, not all of them
 
-The response codebook is supplied to the information-gain policy. The machine
-does not yet have to *learn what its pokes mean*.
+Gate 0 originally supplied the full poke-response codebook to the
+information-gain policy. Gate 4 removes that particular support.
 
-That is the next serious boundary.
+The world now hides a random state-dependent response signature. During a
+calibration phase the machine is given a context label and may only learn the
+signature by issuing scalar pokes. After calibration, the same learned response
+model is reused to choose three information-directed pokes per context.
 
-A stronger AlternativeNeuron should begin with an unknown state-dependent
-response operator and learn it from scalar consequences while simultaneously
-deciding what to probe. Only after that should slow structural adaptation be
-allowed to modify the operator itself.
+The result is intentionally modest:
 
-That creates the nontrivial loop:
+```text
+labeled scalar calibration       192 pokes
+active test phase                384 pokes / 128 contexts
+active test accuracy             1.000
+shuffled learned codebook        0.125 accuracy
+active total incl. calibration   576
+exhaustive total                 1728
+```
+
+So a poke can acquire **learned semantics** rather than arriving with its
+meaning hard-coded. But the calibration labels are still an ontology supplied
+from outside. The machine knows that "this is context 7" while it is learning
+what context 7 does under each action.
+
+That leaves the more interesting problem untouched:
+
+> **Can recurring patterns of action-conditioned consequence become internal
+> objects without anybody naming the objects first?**
+
+## The next boundary: from response model to self-made objects
+
+The next experiment should present a stream containing recurring hidden regimes
+and one-off accidents. There are more regimes than durable memory slots.
+Initially every surprise may leave only a temporary response trace.
+
+```text
+surprise
+   |
+try informative pokes
+   |
+temporary response signature
+   |
+recurs and saves future sensing?
+   |                 \
+  no                  yes
+   |                    \
+decay                consolidate
+                         |
+                  internal prototype
+                         |
+                changes future probing
+```
+
+The attacker must be a boring cache with exactly the same memory budget: LRU,
+random replacement, or "remember the most recent K things". A selective
+mechanism has earned something only if it uses its K slots for recurring,
+future-useful structure and therefore pays fewer later probes on held-out
+streams.
+
+This is the old V24 question "which pieces of experience deserve to become part
+of the machine?" with the new poke channel included.
+
+## The boundary after that: did the world change, or did I change myself?
+
+Slow structural adaptation makes the problem stranger. If useful traffic alters
+the transport operator, then the same external state can later produce a
+different action-response relation simply because **the machine changed the
+way it touches the state**.
+
+That creates self-induced nonstationarity:
+
+```text
+world x
+  |
+poke through operator T(theta)
+  |
+scalar consequence
+  |
+learn response model
+  |
+experience changes theta
+  |
+T(theta) changes
+  |
+old response model becomes stale
+```
+
+A serious AlternativeNeuron should eventually distinguish two explanations for
+a prediction error:
+
+```text
+A. the world changed
+B. my own operator changed
+```
+
+That is a much sharper self/world problem than attaching a philosophical label
+to a pulse. It is also experimentally attackable: freeze the world and change
+the internal operator; then freeze the operator and change the world. If the
+machine cannot tell those interventions apart, it has no earned self-model.
+
+The longer-term loop is therefore:
 
 ```text
 unknown world
@@ -127,16 +233,15 @@ act -> consequence
    |
 learn response model
    |
-choose better acts
+form useful internal objects
    |
-remember useful state
+remember selectively
    |
 change transport slowly
    |
-old response model may become wrong
+model own operator change
    |
 act again
 ```
 
-The machine would then have to distinguish **the world changed** from **I
-changed the way I touch the world**. That is the next place worth poking.
+That is where this repo should poke next.
