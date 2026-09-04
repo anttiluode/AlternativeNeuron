@@ -1,0 +1,112 @@
+{
+  "claim_boundary": "Synthetic deterministic 12-bit action-response family under an explicit independent-bit novelty prior. The probe-value admission rule is hand designed and optimizes recent scalar sensing cost; it is not a claim of general concept formation, biological equivalence, consciousness, or a new caching theorem.",
+  "classification": "PROBE_VALUE_SELECTIVE_OBJECTS_BEAT_RECENCY_RANDOM_AND_FREQUENCY_CACHE_UNDER_DECLARED_NOVELTY_PRIOR",
+  "gate": "G5_SELECTIVE_INTERNAL_OBJECTS",
+  "open_world_novelty_tradeoff": {
+    "alpha_0.001": {"known_mean_probes": 9.0, "novel_expected_probes": 11.997866990693934, "novel_false_accept_probability": 0.0003739277702018392},
+    "alpha_0.003": {"known_mean_probes": 7.0, "novel_expected_probes": 11.99189231692999, "novel_false_accept_probability": 0.0013876478076674129},
+    "alpha_0.01": {"known_mean_probes": 5.0, "novel_expected_probes": 11.9606054753786, "novel_false_accept_probability": 0.005675612483231088},
+    "alpha_0.03": {"known_mean_probes": 3.6666666666666665, "novel_expected_probes": 11.810002390844613, "novel_false_accept_probability": 0.022081308365918796},
+    "alpha_0.1": {"known_mean_probes": 3.0, "novel_expected_probes": 11.631048200441501, "novel_false_accept_probability": 0.04128529064224473},
+    "closed_world": {"known_mean_probes": 1.6666666666666667, "novel_expected_probes": 1.0798164554667458, "novel_false_accept_probability": 1.0}
+  },
+  "pass": true,
+  "policies": {
+    "frequency": {
+      "admissions": 45.375,
+      "error_rate": 0.00020833333333333335,
+      "false_consolidations": 0.0,
+      "mean_cache_precision": 0.9971875,
+      "mean_probes": 10.5096875,
+      "mean_recurring_slot_occupancy": 0.99328125,
+      "oneoff_false_accept_rate": 0.0014014509138873185,
+      "oneoff_mean_probes": 11.990260504993405,
+      "phase0_recurring_mean_probes": 10.165409139331905,
+      "phase1_early_recurring_mean_probes": 10.63125,
+      "phase1_late_recurring_mean_probes": 10.3203125,
+      "phase1_recurring_mean_probes": 10.324152727830082,
+      "recurring_mean_probes": 10.244813362063251
+    },
+    "lru": {
+      "admissions": 571.5,
+      "error_rate": 0.00020833333333333335,
+      "false_consolidations": 181.875,
+      "mean_cache_precision": 0.7943836805555555,
+      "mean_probes": 10.824270833333333,
+      "mean_recurring_slot_occupancy": 0.7929947916666666,
+      "oneoff_false_accept_rate": 0.0006830601092896175,
+      "oneoff_mean_probes": 11.993852459016393,
+      "phase0_recurring_mean_probes": 10.579299109899596,
+      "phase1_early_recurring_mean_probes": 10.7125,
+      "phase1_late_recurring_mean_probes": 10.65,
+      "phase1_recurring_mean_probes": 10.650412207158736,
+      "recurring_mean_probes": 10.614942067540268
+    },
+    "oracle": {
+      "admissions": 0.0,
+      "error_rate": 0.0010416666666666667,
+      "false_consolidations": 0.0,
+      "mean_cache_precision": 1.0,
+      "mean_probes": 9.671979166666667,
+      "mean_recurring_slot_occupancy": 0.75,
+      "oneoff_false_accept_rate": 0.006738332674008825,
+      "oneoff_mean_probes": 11.955681426377108,
+      "phase0_recurring_mean_probes": 9.08953534156091,
+      "phase1_early_recurring_mean_probes": 9.559375,
+      "phase1_late_recurring_mean_probes": 9.5515625,
+      "phase1_recurring_mean_probes": 9.436773725237972,
+      "recurring_mean_probes": 9.263615593176707
+    },
+    "probe_value": {
+      "admissions": 31.875,
+      "error_rate": 0.0010416666666666667,
+      "false_consolidations": 0.0,
+      "mean_cache_precision": 0.9966666666666667,
+      "mean_probes": 9.750208333333333,
+      "mean_recurring_slot_occupancy": 0.7415625,
+      "oneoff_false_accept_rate": 0.006747850440506287,
+      "oneoff_mean_probes": 11.95813383754462,
+      "phase0_recurring_mean_probes": 9.218361287986944,
+      "phase1_early_recurring_mean_probes": 9.58125,
+      "phase1_late_recurring_mean_probes": 9.5890625,
+      "phase1_recurring_mean_probes": 9.491394669578346,
+      "recurring_mean_probes": 9.355306273057385
+    },
+    "random": {
+      "admissions": 614.0,
+      "error_rate": 0.000625,
+      "false_consolidations": 181.625,
+      "mean_cache_precision": 0.7513368055555556,
+      "mean_probes": 10.857916666666666,
+      "mean_recurring_slot_occupancy": 0.7499479166666667,
+      "oneoff_false_accept_rate": 0.001993253551462755,
+      "oneoff_mean_probes": 11.989369676741733,
+      "phase0_recurring_mean_probes": 10.563149334938446,
+      "phase1_early_recurring_mean_probes": 10.840625,
+      "phase1_late_recurring_mean_probes": 10.6875,
+      "phase1_recurring_mean_probes": 10.748778489204495,
+      "recurring_mean_probes": 10.655960529137472
+    }
+  },
+  "representative_seed0": {
+    "final_caches": {
+      "frequency": ["P4", "P1", "P5", "P3"],
+      "lru": ["P5", "P4", "P1", "P2"],
+      "probe_value": ["P1", "P3", "P2"],
+      "random": ["P2", "P4", "P3", "P1"]
+    },
+    "oracle_phase_caches": [["P0", "P1", "P2"], ["P0", "P1", "P2"]]
+  },
+  "schema": "alternative-neuron-gate5-v1",
+  "setup": {
+    "actions": 12,
+    "alpha": 0.01,
+    "durable_slots_K": 4,
+    "oneoff_probability": 0.15,
+    "phase_length": 600,
+    "phase_probabilities": [[0.1, 0.1, 0.16, 0.2, 0.22, 0.07], [0.05, 0.2, 0.07, 0.08, 0.25, 0.2]],
+    "recurring_signatures": ["110000101110", "100010010011", "001100001011", "010000011111", "000010010111", "000000011111"],
+    "seeds": [0, 1, 2, 3, 4, 5, 6, 7],
+    "temporary_trace_window": 128
+  }
+}
