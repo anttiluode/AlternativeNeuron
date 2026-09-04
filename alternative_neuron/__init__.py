@@ -17,6 +17,12 @@ from .learned import (
     calibrate_labeled,
     shuffled_calibration,
 )
+from .prototypes import (
+    NoveltyPrior,
+    OpenWorldRecognizer,
+    PrototypeRecognition,
+    Signature,
+)
 
 __all__ = [
     "ActivePoker",
@@ -34,4 +40,8 @@ __all__ = [
     "UnknownResponseWorld",
     "calibrate_labeled",
     "shuffled_calibration",
+    "NoveltyPrior",
+    "OpenWorldRecognizer",
+    "PrototypeRecognition",
+    "Signature",
 ]
