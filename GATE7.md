@@ -143,6 +143,10 @@ consequence if ignored
 
 This is an operational address, not metaphysical ownership. An external tool can be causally close; an internal autonomous process can be causally distant.
 
+## CI receipt
+
+The final Gate 7 branch head passes the complete public ladder: unit tests, Gates 0–4, Gate 5/5B, Gate 6/6B/6C, Gate 7A and Gate 7B.
+
 ## What Gate 7 does not show
 
 The mixtures are linear. The response law, costs, and source ecology are engineered. G7B still receives a privileged command/efference record. Temporal precedence alone is not proof of causation, and the delayed dependency is intentionally easy enough that ordinary lag correlation detects it.
