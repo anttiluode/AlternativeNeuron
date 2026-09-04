@@ -38,6 +38,9 @@ reversible poke, the action-response pair is an additional sense.
 | **G6C — PCA / ICA audit** | can source statistics separate mixed generators before semantic naming? | PCA degenerate; ICA recovery **1.000**; `self` stays **50/50** until efference timing anchors it |
 | **G7A — signal ecology** | under fixed routing, which already-separated signals deserve structure? | joint consequence cost **0.56965** vs independent-value **0.69623**, variance **0.81079**, oracle **0.56146** |
 | **G7B — temporal causal address** | what do static separation, timing, and efference each add? | ICA recovery **0.99992**; +5 response lag recovered **8/8**; time reversal flips it to −5; shuffled timing collapses the peak |
+| **G8A — WidePresent** | can a frozen point miss hidden moving state that ordered history recovers? | point **50%**, unordered same samples **50%**, ordered window **100%**, reversible probe **100%** |
+| **G8B — coordinate-invariant object** | can an object survive complete physical relabeling? | raw coordinate / frequency / passive graph each **25%**; intrinsic intervention-response signature **100%** over 384 remappings |
+| **G8C — nonlinear attractors** | can a persistent operator later reactivate distinct basins, and does frequency identify them? | 3 stable basins; half-cue reactivation **96%**; 3-bit return **94%**, 10-bit return **13%**; frequency-only identity **33.3%** |
 
 CI reruns the full ladder on every PR.
 
@@ -119,32 +122,55 @@ See [`GATE6.md`](GATE6.md).
 
 ## Gate 7: from sources to causal address
 
-Gate 7A gives every policy the same clean source identities and asks only where
-to spend a fixed conductance budget. A loud, frequent fly is deliberately cheap
-to ignore; a quiet context stream becomes valuable only together with
-partner/alarm streams. Joint consequence allocation nearly matches the oracle
-and reallocates after the ecology changes.
+Gate 7A asks where to spend a fixed conductance budget. A loud, frequent fly is
+deliberately cheap to ignore; a quiet context stream becomes valuable only
+together with partner/alarm streams. Joint consequence allocation nearly
+matches the oracle and reallocates after the ecology changes.
 
-Gate 7B removes the clean command/partner coordinates. A command source and a
-delayed responder are mixed through regenerated rotations, while an unrelated
-fly channel dominates raw variance.
+Gate 7B removes clean command/partner coordinates. Static ICA recovers the two
+generators almost perfectly, but static statistics have no time arrow. Time
+reversal leaves ICA contrast unchanged while flipping the discovered relation
+from +5 to −5. An efference record anchors the command side.
 
-Static ICA recovers the two generators almost perfectly, but static statistics
-have no time arrow. Time-reversing the whole dataset changes ICA contrast by
-exactly zero while flipping the discovered temporal relation from +5 to −5.
-With an efference record, the machine can anchor the command component at zero
-lag and give the responder a directed causal address.
-
-The shuffled-timing control reduces the mean command-linked peak from **0.823**
-to **0.035** (~23.5×). A plain raw lag-correlation attacker also recovers the
-delay perfectly, which is an explicit negative: this easy gate does not require
-a fancy architecture merely to detect coupling.
+A plain raw lag-correlation attacker also recovers the delay perfectly, an
+explicit negative: the easy dependency itself does not require fancy source
+separation.
 
 > **Static statistics can tell us which generators exist. Temporal structure
-> can tell us how they are related. A causal anchor is what tells the machine
-> which side issued the action.**
+> can tell us how they are related. A causal anchor tells the machine which side
+> issued the action.**
 
 See [`GATE7.md`](GATE7.md).
+
+## Gate 8: the object is not the coordinate
+
+Gate 8 begins from the attractor / engram / frequency intuition but keeps the
+terms separate.
+
+`G8A` gives `WidePresent` a precise role. Two moving states can have the same
+instantaneous observation and even the same unordered recent samples, while the
+**ordered** recent trajectory identifies the future perfectly.
+
+`G8B` then embeds four synthetic objects under every permutation of their
+physical coordinates. Frequency, passive graph shape, and raw coordinate
+matching all fall to chance. An intrinsic action-response signature survives
+all remappings.
+
+`G8C` finally introduces a nonlinear Hopfield-style recurrent system and earns
+the word `attractor` in the narrow dynamical sense. Three supplied patterns are
+stable fixed points; nearby perturbations return, distant perturbations escape,
+and a half-pattern cue reactivates the correct state **96%** of the time after
+activity has otherwise been absent.
+
+All three attractors are fixed points, so their oscillation frequency is the
+same: zero. Frequency-only identity is therefore **1/3**.
+
+> **Frequency can be one coordinate of a dynamical fingerprint. It is not the
+> identity of a memory object. A stronger object is an equivalence class of
+> recoverable dynamics and action-response relations over changing
+> implementation coordinates.**
+
+See [`GATE8.md`](GATE8.md).
 
 ## Run it
 
@@ -159,40 +185,42 @@ python -m experiments.gate6b_self_world_nonidentifiability --check
 python -m experiments.gate6c_blind_source_separation --check
 python -m experiments.gate7a_signal_ecology_allocation --check
 python -m experiments.gate7b_temporal_causal_separation --check
+python -m experiments.gate8a_wide_present --check
+python -m experiments.gate8b_coordinate_invariant_object --check
+python -m experiments.gate8c_nonlinear_attractor_basins --check
 python -m unittest discover -s tests -v
 ```
 
 ## What this repo does not claim
 
-The current worlds are synthetic. Several response laws, novelty priors,
-allocation costs, and causal anchors are engineered. Gate 4 still uses labels
-during calibration. Gate 7B is a linear mixture with a hand-built delayed
-responder. There is no claim here of general intelligence, biological
-equivalence, subjective experience, an engram model, or a new PCA/ICA/caching
-theorem.
+The worlds are synthetic. Several response laws, novelty priors, allocation
+costs, interventions, and causal anchors are engineered. Gate 4 still uses
+labels during calibration. Gate 7B is a linear mixture with a hand-built
+delayed responder. Gate 8B uses exact coordinate relabeling; Gate 8C uses a
+small engineered Hopfield-style network with supplied patterns.
 
-Negative results are part of the architecture: medium memory fails when cheap
-surprise cannot detect the relevant change; novelty makes recognition costly;
-intervention-equivalent hypotheses remain indistinguishable; and simple lagged
-correlation is already enough for the easy delayed-response assay.
+There is no claim here of general intelligence, biological equivalence,
+subjective experience, a biological engram model, or a new PCA/ICA/caching/
+attractor theorem.
 
-## Next — dynamical objects
+Negative results are part of the architecture: cheap surprise can be blind;
+novelty makes recognition costly; intervention-equivalent hypotheses remain
+indistinguishable; simple lagged correlation is enough for the easy delayed
+response; and distinct attractors can have exactly the same frequency.
 
-The next gate asks what should count as the **same internal object** when the
-physical coordinates implementing it change.
+## Next — identity under real drift
 
-That is where the attractor / engram / frequency intuition gets a stricter
-form:
+Exact coordinate permutation is the easy invariance because the map is known to
+the experimenter and the whole operator is relabeled consistently.
 
-```text
-instantaneous state      may be ambiguous
-ordered trajectory       may reveal hidden dynamical state
-frequency / spectrum     may be one useful coordinate
-causal response          may be another
-substrate neuron IDs     should not be the identity if dynamics remap
-```
+The next gate removes that crutch:
 
-See [`NEXT.md`](NEXT.md) for the preregistered `WidePresent` / substrate-remap
-attack.
+> **Can a useful dynamical object remain identifiable while the substrate
+> slowly rewrites itself and no explicit old→new coordinate map is supplied?**
+
+This is the harder version of a memory being persistent while its physical
+realization remains in flux.
+
+See [`NEXT.md`](NEXT.md).
 
 **Attackers first, claims second.**
