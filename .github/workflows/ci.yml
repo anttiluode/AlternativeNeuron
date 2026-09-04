@@ -25,3 +25,5 @@ jobs:
         run: python -m experiments.gate5_selective_objects --check
       - name: Gate 5B - cost-aware cache attacker
         run: python -m experiments.gate5b_cost_aware_attacker --check
+      - name: Gate 6 - world vs self attribution
+        run: python -m experiments.gate6_self_world_attribution --check
