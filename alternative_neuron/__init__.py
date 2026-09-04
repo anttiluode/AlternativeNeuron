@@ -9,6 +9,14 @@ from .core import (
     silent_switch_sequence,
     visible_event_sequence,
 )
+from .learned import (
+    Calibration,
+    LearnedIdentification,
+    LearnedPoker,
+    UnknownResponseWorld,
+    calibrate_labeled,
+    shuffled_calibration,
+)
 
 __all__ = [
     "ActivePoker",
@@ -20,4 +28,10 @@ __all__ = [
     "StepResult",
     "silent_switch_sequence",
     "visible_event_sequence",
+    "Calibration",
+    "LearnedIdentification",
+    "LearnedPoker",
+    "UnknownResponseWorld",
+    "calibrate_labeled",
+    "shuffled_calibration",
 ]
