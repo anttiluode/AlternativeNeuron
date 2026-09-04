@@ -22,4 +22,4 @@ jobs:
       - name: Registered gate ladder
         run: python run_gates.py --check
       - name: Gate 5 - selective internal objects
-        run: python experiments/gate5_selective_objects.py --check
+        run: python -m experiments.gate5_selective_objects --check
