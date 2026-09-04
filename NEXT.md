@@ -1,225 +1,174 @@
-# NEXT — signal ecology under a fixed budget
+# NEXT — what is the object if the substrate coordinates move?
 
-Gate 6 is now executed on the `gate6-self-world-attribution` branch.
-
-It produced three linked results:
-
-1. a factorized world/self response model can compress a joint family and compose unseen combinations;
-2. intervention cannot distinguish causal stories that predict the same response to every available poke;
-3. source statistics can separate some mixed generators even when PCA cannot, but blind separation still cannot attach the semantic label `self` without an anchor such as efference timing.
-
-See [`GATE6.md`](GATE6.md).
-
-The next work should therefore stop treating the world as two clean factors and move to the thing a real bounded observer actually faces: **many overlapping signal trains with different statistics, histories, delays, and values.**
-
-## Gate 7 — which signals deserve structure?
-
-### Question
-
-Suppose the observer receives mixtures of sources with properties such as:
+Gate 7 separated four questions that had been getting mixed together:
 
 ```text
-new / transient
-old / recurring
-fast / delayed
-self-anchored / externally driven
-high variance / low variance
-frequent / rare
-predictive / useless
+statistics       which generators exist?
+timing           how are they coupled?
+efference        which side issued the action?
+consequence      which generators deserve scarce routing?
 ```
 
-Some sources recur enough to deserve durable objects. Some matter often enough to deserve cheaper routing. Some are loud but irrelevant. Some are rare but costly to miss.
+The next problem is more basic.
 
-The claim to test is deliberately narrow:
+A memory or recurring computation should not have to mean "these exact neuron indices have these exact values." Real networks can drift, remap, recruit overlapping cells, and express memories as trajectories as well as static population states.
 
-> Under a fixed representation and transport budget, a bounded active observer can do better by allocating memory and routing according to **expected future consequence**, not raw variance, recency, or frequency alone.
+So Gate 8 asks:
 
-This is the place where Gate 5 and Gate 2 should finally meet.
+> **What should count as the same internal object when its physical realization changes?**
 
-## Synthetic signal ecology
+This is the mathematically cleaner version of the attractor / engram / signal-flow intuition.
 
-Start with a small mixed stream containing at least these source roles:
+## Important terminology fence
+
+Do not use `engram` and `attractor` as synonyms.
+
+- an **engram** is a physical memory trace / ensemble / plastic substrate that helps make later recall possible;
+- an **attractor** is a dynamical object: a fixed point, limit cycle, manifold, or other region/trajectory toward which dynamics return;
+- an engram can bias a circuit so that a cue drives activity into a familiar attractor or trajectory, but the two words describe different levels.
+
+Likewise, do not call every internal object a `frequency object`. Frequency may be one coordinate of a dynamical fingerprint. Fixed points have no oscillation at all, and two different processes can share the same dominant frequency.
+
+The strongest candidate definition is therefore not a stored vector but an **equivalence class of trajectories and intervention responses** that remains recognizable when implementation coordinates change.
+
+## Gate 8A — a point in time is not always a state
+
+Start with the simplest WidePresent / MovingTarget attack.
+
+Construct trajectories that share the same instantaneous scalar observation but have different hidden dynamical state:
 
 ```text
-SELF COMMAND
-    sparse events with a privileged efference timestamp
-
-PARTNER / RESPONDER
-    delayed response statistically coupled to some self commands
-
-FLY
-    frequent high-variance distractor, persistent but task-irrelevant
-
-SLOW CONTEXT
-    low-amplitude persistent state that changes how another signal should be interpreted
-
-RARE ALARM
-    infrequent source with large consequence if missed
+trajectory A: crossing zero while moving upward
+trajectory B: crossing zero while moving downward
 ```
 
-The labels above exist only in the generator and evaluation code. The observer should receive mixtures and whatever causal anchors are explicitly declared.
-
-The user-level intuition to test is not that a fly, a person, and a neuron are the same thing. It is that a stream-processing system may have to decide which recurring causes become cheap, durable, and highly routed while others remain weak or transient.
-
-## Three separations
-
-Gate 7 should keep three problems distinct.
-
-### 1. Statistical source separation
-
-Can the system infer recurring generators from mixtures using source properties such as:
-
-- non-Gaussianity;
-- autocorrelation / persistence;
-- spectral or temporal signature;
-- nonstationarity;
-- delayed dependence?
-
-PCA and ICA are attackers / tools here, not the final architecture.
-
-### 2. Causal address
-
-For each recovered source, estimate an operational rather than metaphysical notion of distance:
+At the crossing:
 
 ```text
-controllability
-response latency
-predictability from issued commands
-reciprocity / delayed echo
-persistence after command stops
+y(t) = 0
 ```
 
-A source tightly locked to an efference marker is causally close to the acting boundary. A delayed responder is farther away. An unrelated distractor is farther still.
+for both.
 
-This should be called **causal address** or **causal distance**, not proof of selfhood. An external tool can be highly controllable and therefore causally close.
-
-### 3. Resource allocation
-
-Give the system fewer durable object slots and less transport conductance than there are recurring sources.
-
-The system must decide:
+A point observer cannot know which future follows. A short temporal window can:
 
 ```text
-what stays transient?
-what earns a durable object?
-what gets cheaper routing?
-what gets suppressed despite being frequent or loud?
+[y(t-k), ..., y(t)]
 ```
 
-The primary proposed rule should optimize expected future task/sensing cost jointly, not separately per source.
+The gate should compare:
 
-## Required attackers
+1. instantaneous observation;
+2. same number of samples shuffled in time;
+3. causal ordered window;
+4. active poke plus ordered window;
+5. oracle hidden velocity / phase.
 
-At minimum:
+This would give `WidePresent` a precise job: **a present can be a trajectory fragment, not a frozen frame.**
 
-1. **PCA / variance allocation** — give resources to the largest-variance components;
-2. **frequency** — allocate to what occurs most;
-3. **recency / LRU** — allocate to what happened recently;
-4. **ICA then frequency** — separate first, but allocate with no consequence model;
-5. **prediction-only** — allocate to sources that best predict future observations, regardless of task consequence;
-6. **random allocation**;
-7. **oracle source labels + future consequences** — ceiling only.
+Kill the claim if unordered history performs equally well.
 
-If the proposed architecture only wins because it is given cleaner source identities than the attackers, Gate 7 fails.
+## Gate 8B — same dynamics, different physical coordinates
 
-## Primary metrics
-
-Measure:
-
-- held-out task loss / missed-consequence cost;
-- scalar sensing or reconstruction cost;
-- durable slots occupied by useful vs distracting sources;
-- conductance / routing budget assigned to each source;
-- adaptation after source statistics change;
-- false consolidation of one-off or useless events;
-- rare-alarm miss rate;
-- how quickly a persistent distractor becomes cheap to ignore.
-
-The `FLY` source is specifically useful as an attacker: it should be frequent and high variance enough that PCA/frequency wants to devote resources to it, while a consequence-aware system should learn that it is cheap to suppress unless the task changes.
-
-## The signal-train memory picture
-
-The architecture should expose the user's old/new/transient intuition explicitly:
+Take several small dynamical systems and embed each one into many regenerated substrate coordinate systems:
 
 ```text
-FAST TRACE
-    what is happening now?
-    candidate source activity
-
-MEDIUM OBJECT
-    have I seen this generator enough that recognizing it again should be cheap?
-
-SLOW ROUTING
-    has this generator mattered often enough that future evidence about it deserves more / less transport budget?
+latent dynamics z(t)
+       ↓ random permutation / orthogonal mix
+physical state x(t)
 ```
 
-A source can therefore move through states:
+The identity test must happen across remappings never seen together during calibration.
+
+Required attackers:
+
+- exact coordinate overlap / nearest stored state;
+- PCA subspace similarity;
+- dominant-frequency-only fingerprint;
+- autocorrelation / power-spectrum fingerprint;
+- intervention-response fingerprint;
+- combined dynamical fingerprint;
+- oracle latent identity.
+
+The desired invariant is not "which neurons fired?" but something closer to:
 
 ```text
-novel pulse
-   -> temporary trace
-   -> recurring candidate
-   -> durable object
-   -> structural routing bias
+object address = {
+    return dynamics,
+    response latency,
+    decay / persistence,
+    oscillatory modes if present,
+    transition probabilities,
+    controllability,
+    consequence
+}
 ```
 
-But there must also be reverse transitions:
+If a random permutation of the substrate destroys identity, the object definition is too coordinate-bound.
+
+## Gate 8C — earn the word attractor
+
+Only after 8A/8B should the repo introduce a genuinely nonlinear recurrent system with multiple basins.
+
+Requirements:
+
+- several initial states converge to the same basin / recurring trajectory;
+- a cue can reactivate that basin after silence;
+- perturbations can measure return time, escape probability, and transitions to other basins;
+- the same basin is re-embedded under different substrate permutations;
+- identity is judged from dynamics and intervention response, not neuron IDs.
+
+Then a useful statement would be:
+
+> **The persistent object is an equivalence class of recoverable dynamics over a changing substrate, not a frozen population vector.**
+
+That would still not make it a biological engram. It would make the artificial architecture stop confusing implementation coordinates with dynamical identity.
+
+## Frequency attacker
+
+The frequency intuition should be tested, not assumed.
+
+Build at least two objects with the same dominant oscillation frequency but different decay, phase response, nonlinear return map, or causal coupling.
+
+If frequency alone identifies them, the assay is too easy.
+
+A better possibility is:
 
 ```text
-obsolete / useless source
-   -> decay durable confidence
-   -> release routing budget
+frequency / spectrum     one part of the lens
+causal response          another part
+trajectory geometry      another part
+history / context         another part
 ```
 
-Otherwise the architecture merely accumulates history and eventually ossifies.
+The address is therefore multi-coordinate, but every coordinate has to earn its place against an attacker.
 
-## Mirror / resonance attack
+## Connection back to the current architecture
 
-The delayed responder should deliberately violate simple ICA independence by echoing part of the self-command stream after a variable delay.
-
-That gives a clean distinction:
+If Gate 8 works, the whole AlternativeNeuron loop becomes:
 
 ```text
-independent source separation
-vs
-coupled causal system identification
+raw mixed activity
+    ↓
+separate recurring generators
+    ↓
+recover directed causal relations
+    ↓
+form dynamical objects invariant to substrate coordinates
+    ↓
+keep only objects that reduce future sensing / consequence
+    ↓
+reshape routing toward repeatedly useful objects
+    ↓
+remapping changes the substrate but not necessarily the object
 ```
 
-If ICA fuses the command and responder, temporal intervention structure should be allowed to rescue the decomposition. Compare against matched correlations with shuffled lag to ensure the system is using direction / timing rather than raw similarity.
+This is where `PresentMoment`, `WidePresent`, `MovingTarget`, the Geometric Neuron work, and the active-poking architecture actually meet in a falsifiable way.
 
-This is the mathematically cleaner version of the "poke goes out, response comes back, resonation connects things" intuition: not mystical resonance, but a directed delayed dependency that can be tested.
+## Later: PAC literally
 
-## Kill conditions
+Only after there are actual dynamical modes and temporal windows should a PAC fork be introduced.
 
-Do not promote Gate 7 if:
-
-- variance or frequency alone performs equally well;
-- the source labels leak into the policy;
-- the rare alarm is made trivially identifiable by amplitude;
-- the fly is too easy to ignore because it never overlaps useful signals;
-- the delayed responder can be separated without using temporal direction;
-- resource allocation does not improve held-out consequence or sensing cost;
-- the system cannot release budget when source statistics change;
-- the effect disappears under regenerated mixing matrices / source schedules.
-
-## Longer target
-
-If Gate 7 passes, the next layer is a network of bounded observers rather than one observer: each node sees only local mixtures, sends limited messages, and may reshape routing from repeated traffic.
-
-Only there does the social-network analogy become worth testing mathematically:
-
-```text
-local agents
-   -> selective message routing
-   -> broadcast / hierarchy / neighborhood effects
-   -> repeated traffic reshapes routes
-   -> macroscopic organization emerges
-```
-
-That would be a graph/message-passing experiment, not a claim that society literally is a brain.
-
-## PAC-style fork — later
-
-The fast/medium/slow architecture is still not literal phase-amplitude coupling. A rhythmic fork should come only after Gate 7, when there are actually multiple source timescales worth gating. Compare a slow oscillatory gate against an aperiodic slow gate with the same duty cycle; if phase buys nothing, kill the PAC interpretation.
+A slow oscillator may gate the gain or admission of faster modes, but it must beat an aperiodic gate with identical duty cycle and energy budget. Otherwise the useful thing was timescale separation, not phase-amplitude coupling.
 
 **Attackers first, claims second.**

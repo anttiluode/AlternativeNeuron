@@ -31,3 +31,7 @@ jobs:
         run: python -m experiments.gate6b_self_world_nonidentifiability --check
       - name: Gate 6C - PCA/ICA source separation
         run: python -m experiments.gate6c_blind_source_separation --check
+      - name: Gate 7A - signal ecology allocation
+        run: python -m experiments.gate7a_signal_ecology_allocation --check
+      - name: Gate 7B - temporal causal separation
+        run: python -m experiments.gate7b_temporal_causal_separation --check
