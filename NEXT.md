@@ -11,7 +11,7 @@ consequence      which generators deserve scarce routing?
 
 The next problem is more basic.
 
-A memory or recurring computation should not have to mean "these exact neuron indices have these exact values." Real networks drift, remap, recruit overlapping cells, and express memories as trajectories as well as static population states.
+A memory or recurring computation should not have to mean "these exact neuron indices have these exact values." Real networks can drift, remap, recruit overlapping cells, and express memories as trajectories as well as static population states.
 
 So Gate 8 asks:
 
@@ -28,6 +28,8 @@ Do not use `engram` and `attractor` as synonyms.
 - an engram can bias a circuit so that a cue drives activity into a familiar attractor or trajectory, but the two words describe different levels.
 
 Likewise, do not call every internal object a `frequency object`. Frequency may be one coordinate of a dynamical fingerprint. Fixed points have no oscillation at all, and two different processes can share the same dominant frequency.
+
+The strongest candidate definition is therefore not a stored vector but an **equivalence class of trajectories and intervention responses** that remains recognizable when implementation coordinates change.
 
 ## Gate 8A — a point in time is not always a state
 
@@ -76,7 +78,7 @@ latent dynamics z(t)
 physical state x(t)
 ```
 
-The identity test must happen across remappings never seen together during training/calibration.
+The identity test must happen across remappings never seen together during calibration.
 
 Required attackers:
 
@@ -124,7 +126,7 @@ That would still not make it a biological engram. It would make the artificial a
 
 ## Frequency attacker
 
-The user's frequency intuition should be tested, not assumed.
+The frequency intuition should be tested, not assumed.
 
 Build at least two objects with the same dominant oscillation frequency but different decay, phase response, nonlinear return map, or causal coupling.
 
