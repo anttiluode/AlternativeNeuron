@@ -21,3 +21,7 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Registered gate ladder
         run: python run_gates.py --check
+      - name: Gate 5 - selective internal objects
+        run: python -m experiments.gate5_selective_objects --check
+      - name: Gate 5B - cost-aware cache attacker
+        run: python -m experiments.gate5b_cost_aware_attacker --check

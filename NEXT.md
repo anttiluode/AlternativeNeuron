@@ -1,158 +1,178 @@
-# NEXT — do not make the next gate easy
+# NEXT — world changed, or I changed myself?
 
-The first ladder is now useful precisely because its cheats are visible.
+Gate 5 is now executed on the `gate5-selective-objects` branch. It removed the
+supplied object labels and found a narrower result than the original slogan:
+selective durable prototypes can reduce expected scalar sensing cost, but only
+under an explicit novelty/error model, and remembered prototypes interact with
+one another. The best finite cache can rationally leave capacity unused.
 
-Gate 4 removed the supplied poke-response codebook but still received context
-labels during calibration. The next work should not merely replace those labels
-with an equally strong hidden lookup table.
+See [`GATE5.md`](GATE5.md) and the machine-readable Gate 5 / 5B receipts.
 
-## Gate 5 — can recurring surprises earn internal objects?
-
-### Question
-
-A stream contains recurring hidden regimes mixed with many one-off accidents.
-No regime has an external name. The only available evidence is:
-
-```text
-cheap HOME residual
-+ chosen reversible poke
-+ one scalar consequence
-```
-
-Durable memory has only `K` prototype slots, while more than `K` distinct
-response patterns occur.
-
-The machine may keep short-lived temporary evidence outside the durable slots,
-but temporary traces must decay. A pattern may become durable only through a
-local admission/consolidation rule.
-
-The claim to test is:
-
-> recurring action-response structure can become an internal object because
-> storing it reduces future sensing cost.
-
-### Required attackers
-
-Use the exact same `K` durable slots:
-
-1. **LRU / remember recency** — every encountered pattern is equally eligible.
-2. **random replacement** — same memory capacity, no selectivity.
-3. **frequency/cache attacker** — a boring heavy-hitter or two-hit admission
-   policy. If the proposed mechanism cannot beat or at least explain its
-   difference from this, do not call the result intelligence.
-4. **oracle top-K** — knows future recurrence and gives the ceiling.
-
-### Metrics
-
-- held-out scalar probes per recurring event;
-- prediction/identification error;
-- fraction of durable slots occupied by genuinely recurring patterns;
-- false consolidation of one-offs;
-- eviction/relearning cost after the recurrence distribution changes;
-- distance to the oracle top-K cache.
-
-### The open-world novelty trap
-
-A serious implementation must not silently assume that the stored prototypes
-are the complete set of possible worlds.
-
-If a response is an arbitrary 12-bit signature, exact certification that a new
-signature equals a stored prototype can require reading all 12 bits. A
-closed-world classifier can stop after enough bits separate the stored
-prototypes; an open-world recognizer cannot do that without either:
-
-- a novelty prior / tolerated false-accept probability;
-- an additional verification channel;
-- structure in the response family;
-- or paying the full measurement cost.
-
-That is not an implementation nuisance. It is a real boundary on the slogan
-"memory makes sensing cheaper." Gate 5 should report the novelty/error tradeoff
-rather than hide it.
-
-A clean positive result would therefore be one of these narrower statements:
-
-```text
-under a declared recurrence/novelty prior,
-selective durable prototypes reduce expected probes at fixed error
-```
-
-or
-
-```text
-under a structured response family,
-known prototypes can be certified with fewer scalar consequences
-```
-
-Anything stronger needs evidence.
+The next work should therefore move to the other unresolved arrow in the
+architecture: **slow self-change can invalidate the meaning of a poke**.
 
 ## Gate 6 — did the world change, or did I change myself?
 
-Gate 2 lets repeated probe traffic modify slow transport conductance. Eventually
-that structural plasticity should modify not only the *cost* of an action but
-its actual response operator.
+### Question
 
-Then the machine faces two experimentally distinguishable causes of surprise:
+So far slow structure changes only the cost of an action. Gate 6 will make
+structure alter the actual action-response operator.
+
+Then the machine can receive the same kind of scalar prediction error from two
+causally different events:
 
 ```text
 WORLD CHANGE
-    x changed while theta stayed fixed
+    hidden state x changed
+    self/operator theta stayed fixed
 
 SELF CHANGE
-    theta changed while x stayed fixed
+    hidden state x stayed fixed
+    self/operator theta changed
 ```
 
-The observable can be the same scalar prediction error.
+The machine is not given the cause label.
 
-### Assay
+The claim to test is deliberately narrow:
 
-Train a response model under `theta_0`, then use paired interventions:
+> A bounded active observer that factorizes world state from its own
+> sensing/acting operator can recover from both kinds of change more cheaply
+> than an equal-budget monolithic adaptive predictor.
+
+Passing this would earn a minimal computational **self-model** only in the sense
+that the machine represents that some changes in its sensory consequences are
+caused by changes in itself.
+
+It would not imply consciousness or subjective experience.
+
+## Assay
+
+Start with a learned scalar response model
 
 ```text
-A. freeze theta, switch hidden world
-B. freeze hidden world, switch theta
-C. switch both
-D. switch neither
+y = R(x, theta, a)
 ```
 
-The system must classify the cause and update the correct model component.
+where:
 
-### Attackers
+- `x` is hidden external context;
+- `theta` is slow internal structure/operator state;
+- `a` is a chosen reversible poke;
+- `y` is the one scalar consequence.
 
-- one monolithic adaptive predictor with the same state budget;
-- always blame world;
-- always blame self/operator;
-- reset everything on surprise;
-- oracle cause label.
+Calibrate under `(x0, theta0)`, then create balanced episodes:
 
-### What would count
+```text
+A. WORLD ONLY   : switch x, freeze theta
+B. SELF ONLY    : freeze x, switch theta
+C. BOTH         : switch x and theta
+D. NEITHER      : freeze both
+```
 
-The factorized machine must beat the monolithic attacker on held-out recovery
-cost after both kinds of change, not merely produce prettier internal labels.
+The observer sees only its ordinary cheap channel plus chosen poke consequences.
+No hidden cause bit is exposed.
 
-If it passes, the repo has earned a minimal computational **self-model** in a
-very narrow sense: it represents that some changes in its sensations are caused
-by changes in its own sensing/acting operator.
+## Required factorization
 
-That still says nothing about consciousness.
+The proposed machine keeps two hypotheses that can be updated separately:
 
-## Experimental fork — PAC-style coupled clocks
+```text
+world model      W
+self/operator    S
 
-Only after the non-oscillatory mechanism is understood should we add rhythms.
-A future fork can introduce a slow phase variable and ask whether it gates:
+predicted consequence = R_hat(W, S, action)
+```
+
+On surprise it should choose interventions that are maximally diagnostic of
+which component became stale, not simply gather more generic evidence.
+
+The first implementation should keep this discrete and exactly auditable before
+adding learned neural models.
+
+## Required attackers
+
+Use the same total state / parameter budget where possible:
+
+1. **monolithic adaptive predictor** — one model of action → consequence with no
+   world/self factorization;
+2. **always blame world** — only W may update;
+3. **always blame self** — only S may update;
+4. **reset everything** — discard both models on surprise;
+5. **random diagnostic pokes** — same number/cost of interventions, no
+   information-directed attribution;
+6. **oracle cause label** — ceiling, not a competitor.
+
+If factorization only gives prettier labels but no cheaper recovery, Gate 6
+fails.
+
+## Metrics
+
+Primary:
+
+- scalar probes required to regain target prediction accuracy after each change
+  type;
+- action-response prediction error during recovery;
+- world-vs-self attribution accuracy;
+- unnecessary updates to the component that did not change.
+
+Secondary:
+
+- held-out transfer to combinations of world and self states not paired during
+  calibration;
+- whether attribution-directed pokes beat random pokes at equal cost;
+- catastrophic reset / forgetting cost;
+- distance to oracle cause labels.
+
+## Kill conditions
+
+Do not promote a self-model interpretation if any of these happen:
+
+- a monolithic equal-budget predictor recovers just as cheaply;
+- cause attribution is possible only because one arm has a trivial amplitude or
+  timing cue;
+- the factorized model was secretly given the true world/self coordinates;
+- shuffled world/self labels perform equally well;
+- diagnostic interventions do not improve over random equal-cost pokes;
+- success disappears when the response tables are regenerated.
+
+## The deeper test after Gate 6
+
+If Gate 6 passes, close the full loop:
+
+```text
+experience
+   -> useful interventions
+   -> medium memory
+   -> slow structural change
+   -> changed action-response operator
+   -> old self-model becomes stale
+   -> intervention identifies that the change was self-caused
+   -> update self model, not world model
+```
+
+That is much more interesting than merely saying "the network has plastic
+weights." The machine would have to model consequences of its **own previous
+learning**.
+
+## PAC-style fork — later, and literally
+
+The current fast/medium/slow architecture is not phase-amplitude coupling (PAC):
+there are no oscillators yet.
+
+Only after the non-oscillatory causal mechanism is understood should a rhythmic
+fork introduce a slow phase variable and test whether it gates:
 
 - fast poke amplitude;
 - surprise threshold;
 - probe budget;
-- or structural write windows.
+- medium-to-slow consolidation windows;
+- or structural rewrite gain.
 
-Then phase-amplitude coupling can be measured literally rather than used as an
-analogy. Compare against an aperiodic slow gate with the same duty cycle. If the
-rhythm itself buys nothing, kill the PAC story.
+Then measure PAC literally and compare against an **aperiodic slow gate with the
+same duty cycle**. If phase buys nothing beyond generic slow gating, kill the
+PAC story.
 
 ## Longer target
-
-The architecture worth chasing is still:
 
 ```text
 predict cheaply
@@ -170,4 +190,5 @@ reshape transport from repeated use
 know when that self-change invalidates the old response model
 ```
 
-The next gates should make each arrow earn its place.
+Gate 5 made the "persistent objects" arrow earn its place in a synthetic assay.
+Gate 6 now has to make the final arrow earn its place.

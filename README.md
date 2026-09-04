@@ -1,306 +1,207 @@
 # AlternativeNeuron
 
-**Antti and teh AI the gang figures it all out once again. Sol thinking repo.**
+**A bounded machine that learns by poking what it cannot fully observe.**
 
 > A bounded machine need not represent everything centrally. It can spend
 > measurements only when prediction fails, use interventions as additional
-> senses, write the answer into persistent state, and slowly reshape the
+> senses, write useful answers into persistent state, and slowly reshape the
 > operator so repeated experience becomes cheaper to handle.
 
-This repo is an attempt to make that sentence executable without pretending it
-is already a biological neuron or a new theory of intelligence.
+AlternativeNeuron is a small falsifiable synthesis of the recent
+`GeometricNeuronV24`, `ReadWrite`, `LentoOrava`, `Operaattori`,
+`OperaattoriJako`, and `OutoSynapsi` line. It is **not** presented as a literal
+biological neuron or a theory of consciousness.
 
-It starts where the recent line converged:
-
-- **GeometricNeuronV24** — scale/address as a question; surprise decides when to
-  pay; persistent WRITE changes future sensing; Gate 6C adds the conditional
-  same-field write-timescale boundary.
-- **ReadWrite** — a state-dependent response to a known write can expose hidden
-  state that passive reading cannot distinguish.
-- **LentoOrava / PulseTriage** — reversible interventions plus one scalar global
-  consequence can localize useful action.
-- **Operaattori** — persistent structure compiles a transport operator.
-- **OperaattoriJako** — separate direct transport sensitivity from the extra
-  effect created when nonlinear state reacts.
-- **OutoSynapsi** — repeated traffic under a fixed resource budget can reshape
-  an operator and therefore future transport cost.
-
-AlternativeNeuron puts those ingredients in **one tiny falsifiable machine**.
-
-## The object
+The core question is simpler:
 
 ```text
-                   SLOW STRUCTURE theta
-               fixed transport budget
-                         |
-                         v
-                 probe cost / routing
-                         |
-        +----------------+----------------+
-        |                                 |
-        v                                 |
-FAST exploratory state                    |
-candidate set -> choose poke              |
-        |                                 |
-        v                                 |
-one scalar consequence                    |
-        |                                 |
-        v                                 |
-resolve hidden context                    |
-        |                                 |
-        v                                 |
-MEDIUM persistent memory                  |
-        |                                 |
-        +------ repeated useful traffic --+
+observation:   what happened?
+intervention:  what happens if I do this?
 ```
 
-Observation asks:
+If two hidden states look identical through the passive channel but react
+differently to the same reversible poke, the action-response pair is an
+additional **sense**.
 
-```text
-what happened?
-```
+## Current receipt
 
-A reversible intervention asks:
+Gates 0–5B are executable. The newest result removes the supplied object labels
+and gives the machine fewer durable memory slots than recurring response
+patterns.
 
-```text
-what happens if I do this?
-```
-
-If two states are identical through the passive channel but react differently
-to the same poke, the poke is an additional **sense**.
-
-## Run
-
-No third-party dependencies are required.
-
-```bash
-python run_gates.py --check
-python -m unittest discover -s tests -v
-```
-
-The machine-readable receipt is [`results/GATES.json`](results/GATES.json).
-GitHub Actions reruns the unit tests and full gate ladder on every push.
-
-## Executed receipt
-
-Gates 0–4 are green in CI.
-
-| gate | question | result |
+| gate | question | executed result |
 |---|---|---|
-| **G0 intervention-as-sense** | can a state-dependent poke resolve states the passive channel cannot? | passive **12.5%**, active poke **100% in 3 pokes**, state-independent poke **12.5%** |
-| **G1 medium memory** | can remembering an identified persistent event avoid paying again? | **1536 -> 192 pokes**, an **8x reduction**, at 100% accuracy on visible event changes |
-| **G1 negative** | does that memory work when the cheap surprise channel cannot see the change? | **no**: silent same-group switch falls to **50%** accuracy |
-| **G2 slow structure** | can repeated useful probe traffic reshape a fixed-budget transport operator? | mean identification cost **3.000 -> 1.061**; shuffled traffic gives **5.466** |
-| **G3 composition** | do fast poke + medium memory + slow structure stack? | 512-step task stays at **100%** accuracy; adapted total probe cost **67.93** vs **192** with frozen structure and **1536** with no memory |
-| **G4 learned poke semantics** | can the machine learn what its pokes mean from scalar consequences rather than receive the response codebook? | 192-poke labeled calibration, then **100%** test accuracy in **3 pokes/context**; shuffled calibration **12.5%**; amortized total **3x cheaper** than exhaustive reuse |
+| **G0 — intervention as sense** | can a state-dependent poke expose hidden state absent from passive observation? | passive **12.5%**; active **100% in 3 pokes**; state-independent control **12.5%** |
+| **G1 — medium memory** | can an identified persistent event avoid being rediscovered? | **1536 → 192 pokes**, 8× fewer; deliberate silent-switch attack falls to **50%** |
+| **G2 — slow structure** | can repeated useful traffic reshape a fixed transport budget? | mean identification cost **3.000 → 1.061**; shuffled traffic **5.466** |
+| **G3 — composition** | do fast poke + medium memory + slow structure stack? | task stays at **100%**; cost **1536 → 192 → 67.93** |
+| **G4 — learned poke semantics** | can the response model be learned from scalar consequences? | labeled calibration then **100% in 3 pokes/context**; shuffled model **12.5%** |
+| **G5 — unlabeled internal objects** | can recurring response patterns earn scarce durable slots because they save future sensing? | probe-value memory **9.355** recurring probes/event vs frequency **10.245**, LRU **10.615**, oracle **9.264** |
+| **G5B — stronger attacker** | does the effect survive a frequency × independent sensing-value cache and error penalties? | **9.355** vs cost-aware attacker **9.909**, oracle **9.264** |
 
-The useful picture is not "three kinds of memory." It is three different jobs:
+CI reruns the gate ladder and tests on every PR.
+
+## The three clocks
+
+The current architecture uses three different jobs rather than three copies of
+memory:
 
 ```text
 FAST
     resolve the current ambiguity
+    choose the next poke from scalar consequences
 
 MEDIUM
-    keep the answer while the event remains trustworthy
+    keep a currently trusted answer
+    do not pay to rediscover it every step
 
 SLOW
-    alter the cost landscape through which future ambiguity is resolved
+    change the operator / cost landscape
+    make repeatedly useful future questions cheaper
 ```
 
-Medium memory stores a fact. Slow memory is closer to **history-made-routing**:
-what repeatedly mattered changes the operator through which later evidence is
-acquired.
-
-## Gate 0 — poke as an extra sense
-
-There are 16 hidden contexts. The free passive channel reveals only which half
-of the context space the machine occupies, leaving eight possibilities.
-
-A reversible poke returns one binary scalar consequence. Seven poke channels
-have different state-dependent responses; five are decoys. The fast state is
-only the current candidate set. It chooses the next poke by
-
-```text
-expected information gain / current transport cost
-```
-
-With the real state-dependent response, every context is resolved in exactly
-three pokes. Remove state dependence while keeping the scalar channel and the
-accuracy falls back to the passive 12.5%.
-
-Classification:
-
-> `STATE_DEPENDENT_INTERVENTION_RESCUES_PASSIVE_AMBIGUITY`
-
-This is the ReadWrite condition in its smallest behavioral form: **the response
-to action can carry information absent from passive observation.**
-
-## Gate 1 — remembering changes future sensing
-
-Contexts persist for eight steps. Event boundaries in this positive arm change
-the cheap passive group, so HOME can notice that its remembered context should
-be questioned.
-
-Without memory, every one of 512 steps buys three pokes: **1536** total.
-
-With medium memory, only the 64 event onsets buy pokes: **192** total.
-
-But the attack is deliberately kept. Change context `0 -> 1` without changing
-the passive group and HOME stays quiet. The machine continues believing `0`
-and gets only **50%** accuracy across that sequence.
-
-Classification:
-
-> `MEMORY_AMORTIZES_PERSISTENT_EVENTS_BUT_CHEAP_SURPRISE_HAS_A_BLIND_SPOT`
-
-So "prediction error decides when to look" is only as good as the prediction
-error channel.
-
-## Gate 2 — memory becomes operator
-
-Across 1024 identification episodes, three poke channels carry all useful
-traffic. Slow consolidation does not store episode identities. It changes the
-**transport conductance** of the channels under a fixed total budget.
-
-For channel conductance `g`, poke cost is `1/g`. The first rule uses
-
-```text
-g_a proportional to sqrt(traffic_a + background)
-```
-
-and exactly preserves `sum(g)`.
-
-Mean cost of a three-poke identification:
-
-```text
-frozen uniform operator       3.000
-traffic-adapted operator      1.061
-shuffled-traffic attacker     5.466
-```
-
-Classification:
-
-> `REPEATED_PROBE_TRAFFIC_RESHAPES_FIXED_BUDGET_TRANSPORT_AND_CHANGES_FUTURE_SENSING_COST`
-
-The number of scalar pokes does **not** fall in this gate. Structure makes the
-repeatedly useful channels cheaper under the same total conductance budget.
-That distinction matters.
-
-## Gate 3 — the three clocks compose
-
-On the 512-step stream:
-
-```text
-active, no memory, frozen structure       cost 1536.00
-active + medium memory, frozen             cost  192.00
-active + medium memory + adapted slow      cost   67.93
-same memory + shuffled slow structure      cost  349.84
-```
-
-All active arms remain at 100% accuracy on the visible-transition task.
-
-Classification:
-
-> `FAST_POKE_MEDIUM_MEMORY_AND_SLOW_STRUCTURE_COMPOSE`
-
-So the first synthetic loop is closed:
+This closes the loop:
 
 ```text
 surprise
-   -> active poke
-   -> resolved state
-   -> persistent memory
-   -> useful probe traffic
-   -> slow operator change
-   -> cheaper future probing
+   ↓
+active poke
+   ↓
+scalar consequence
+   ↓
+fast belief
+   ↓
+medium memory
+   ↓
+repeated useful traffic
+   ↓
+slow operator change
+   └──────────────→ changes future sensing
 ```
 
-## Gate 4 — the poke learns a meaning
+## The newest thing: memory changes measurement geometry
 
-Gate 0 cheated by handing the active policy the poke-response codebook. Gate 4
-hides it.
+Gate 5 has 12 reversible binary poke channels, six recurring unlabeled response
+patterns, 15% unique one-off accidents, and only `K=4` durable prototype slots.
+Temporary evidence decays after 128 events.
 
-A new world assigns each hidden context a deterministic random binary response
-signature across 12 poke actions. During calibration the machine receives a
-context label and can discover that context's signature **only by scalar
-interventions**.
+A plain heavy-hitter remembers what recurs most. The proposed policy instead
+asks which **set of prototypes** minimizes expected future scalar sensing cost.
+It may leave capacity unused.
 
-Executed result:
+That turns out to matter.
+
+Across eight seeds:
 
 ```text
-labeled scalar calibration             192 pokes
-active test phase                      384 pokes / 128 contexts
-mean active test cost                  3 pokes/context
-active test accuracy                   1.000
-shuffled learned response model        0.125 accuracy
-active total incl. calibration         576
-exhaustive total                       1728
-amortized reduction                    3.0x
+                         recurring probes     durable occupancy
+LRU                           10.615                 0.793
+random                        10.656                 0.750
+frequency                     10.245                 0.993
+frequency × solo saving        9.909                 0.992
+probe-value                    9.355                 0.742
+oracle                         9.264                 0.750
 ```
 
-Classification:
+The probe-value policy ends up using roughly **three of four available slots**,
+almost exactly like the future-aware oracle.
 
-> `SCALAR_CALIBRATION_LEARNS_POKE_SEMANTICS_AND_ACTIVE_REUSE_AMORTIZES_IT`
+Why can an empty memory slot be optimal?
 
-This removes the preloaded-response cheat but **not the ontology cheat**. During
-calibration somebody still tells the system "this is context 7." It learns how
-context 7 reacts; it does not invent context 7.
-
-That makes the next question much sharper:
-
-> **Can recurring action-response patterns earn their own internal objects
-> without supplied labels, when durable memory has fewer slots than the number
-> of things the machine encounters?**
-
-A cache-everything/LRU/random-replacement mechanism with the same K slots is the
-attacker. The selective system must earn lower held-out probe cost, fewer false
-consolidations, and better adaptation after the stream changes.
-
-And after that comes the nastier self/world problem: if slow structure changes
-the operator, the same world can produce a different poke response because the
-machine changed itself. Can it distinguish **the world changed** from **I changed
-how I touch the world**?
-
-See [`THEORY.md`](THEORY.md) for that boundary.
-
-## PAC, not PCA
-
-Phase-amplitude coupling (**PAC**) is a cross-frequency phenomenon in which the
-phase of a slower oscillation is related to the amplitude of a faster one.
-Principal component analysis (**PCA**) is linear dimensionality reduction.
-Easy acronym collision; completely different things.
-
-The fast/medium/slow architecture here is **not PAC**. There are currently no
-oscillators. PAC is only an interesting analogy for coupled timescales: a future
-version could let a slow contextual/structural rhythm gate the gain, threshold,
-or budget of fast exploratory pulses. That would need its own experiment.
-
-## The qualia thought, kept where it belongs
-
-The poke adds a real computational degree of freedom:
+Because remembered objects are **not independent cache lines**. Adding another
+stored hypothesis changes the questions and evidence threshold required to
+recognize the others. In the oracle set:
 
 ```text
-receive evidence
+prototype       alone       inside the stored set
+P0                2                 3 probes
+P1                3                 5
+P2                4                 7
 ```
 
-becomes
+So more memory can make an existing memory more expensive to recognize.
+
+That is the result worth carrying forward:
+
+> **Under bounded active observation, internal objects alter the future
+> measurement geometry. Memory capacity and useful memory are not the same
+> thing.**
+
+See [`GATE5.md`](GATE5.md) for the assay, attackers, receipts and boundaries.
+
+## The open-world novelty tax
+
+A closed-world cache can recognize familiar things extremely quickly only by
+assuming that every future thing must already be in memory.
+
+Gate 5 explicitly audits that assumption over all `2^12` response signatures:
+
+| rule | known probes | false accept on novelty |
+|---|---:|---:|
+| closed world | 1.67 | **1.000** |
+| alpha = 0.10 | 3.00 | 0.0413 |
+| alpha = 0.03 | 3.67 | 0.0221 |
+| **alpha = 0.01** | **5.00** | **0.00568** |
+| alpha = 0.003 | 7.00 | 0.00139 |
+| alpha = 0.001 | 9.00 | 0.000374 |
+
+So “memory makes recognition cheap” always carries a price: a novelty prior,
+a tolerated false-accept rate, additional verification, or exploitable structure
+in the response family.
+
+## Run it
+
+No third-party packages are required for the current gates.
+
+```bash
+python run_gates.py --check
+python -m experiments.gate5_selective_objects --check
+python -m experiments.gate5b_cost_aware_attacker --check
+python -m unittest discover -s tests -v
+```
+
+Machine-readable receipts:
+
+- [`results/GATES.json`](results/GATES.json) — Gates 0–4
+- [`results/GATE5_SELECTIVE_OBJECTS.json`](results/GATE5_SELECTIVE_OBJECTS.json)
+- [`results/GATE5B_COST_AWARE_ATTACKER.json`](results/GATE5B_COST_AWARE_ATTACKER.json)
+
+## What the repo does not claim
+
+The current response families are synthetic. The Gate 5 novelty prior is
+explicit and hand chosen. The admission rule is engineered. Gate 4 still uses
+labels during calibration. There is no claim here of general intelligence,
+biological equivalence, subjective experience, or a new caching theorem.
+
+The negative results remain part of the architecture: medium memory fails when
+the cheap surprise channel cannot detect the relevant state change; open-world
+recognition becomes expensive when novelty must be treated seriously.
+
+## Next gate — world or self?
+
+Slow structure currently changes the **cost** of a poke. The next experiment
+will let it change the actual action-response operator.
+
+Then the same scalar surprise can have two causes:
 
 ```text
-choose an act -> receive the consequence of that act
+WORLD CHANGE
+    hidden state changed; my operator did not
+
+SELF CHANGE
+    hidden state stayed fixed; I changed how I touch it
 ```
 
-That action-conditioned evidence is a legitimate place to study agency,
-self/world distinction, counterfactual sensing or sensorimotor contingencies.
-Nothing in this repo measures subjective experience or provides evidence for
-qualia. The philosophical connection can motivate questions; it cannot be
-smuggled into the results.
+The next gate asks whether a factorized machine can tell those causes apart and
+update the correct model component, beating a monolithic adaptive predictor
+with the same state budget.
 
-## Claim boundary
+That would earn only a narrow computational self-model:
 
-This world is intentionally tiny and partly designed to be answerable. HOME
-sees a coarse group; Gate 4 calibration receives context labels; the structural
-law is hand chosen; there is no neural training and no claim of general
-intelligence. The silent-switch failure is retained because it tells us exactly
-where the architecture is currently blind.
+> some changes in my sensations happened because **I changed my own sensing /
+> acting operator**.
+
+See [`NEXT.md`](NEXT.md) for the preregistered attack and the later PAC-style
+rhythmic fork.
 
 **Attackers first, claims second.**
