@@ -1,0 +1,103 @@
+{
+  "all_pass": true,
+  "claim_boundary": "Mechanism toy only. The response codebook is supplied, HOME sees only a coarse group, and the silent-switch failure is intentional. No claim of biological neuron equivalence, general intelligence, or subjective experience.",
+  "gate0_intervention_as_sense": {
+    "active_poke_accuracy": 1.0,
+    "classification": "STATE_DEPENDENT_INTERVENTION_RESCUES_PASSIVE_AMBIGUITY",
+    "mean_paid_pokes": 3.0,
+    "pass": true,
+    "passive_accuracy": 0.125,
+    "state_independent_poke_accuracy": 0.125
+  },
+  "gate1_medium_memory": {
+    "classification": "MEMORY_AMORTIZES_PERSISTENT_EVENTS_BUT_CHEAP_SURPRISE_HAS_A_BLIND_SPOT",
+    "pass": true,
+    "probe_reduction_x": 8.0,
+    "silent_same_group_switch": {
+      "accuracy": 0.5,
+      "paid_pokes": 3,
+      "probe_cost": 3.0,
+      "surprises": 1
+    },
+    "visible_changes_no_memory": {
+      "accuracy": 1.0,
+      "paid_pokes": 1536,
+      "probe_cost": 1536.0,
+      "surprises": 512
+    },
+    "visible_changes_with_memory": {
+      "accuracy": 1.0,
+      "paid_pokes": 192,
+      "probe_cost": 192.0,
+      "surprises": 64
+    }
+  },
+  "gate2_slow_structure": {
+    "adapted_mean_cost": 1.061420549451525,
+    "adapted_over_frozen": 0.353806849817175,
+    "budget_error": 0.0,
+    "classification": "REPEATED_PROBE_TRAFFIC_RESHAPES_FIXED_BUDGET_TRANSPORT_AND_CHANGES_FUTURE_SENSING_COST",
+    "conductance": [
+      2.8264009035346174,
+      2.8264009035346174,
+      0.39119969882179423,
+      2.8264009035346174,
+      0.39119969882179423,
+      0.39119969882179423,
+      0.39119969882179423,
+      0.39119969882179423,
+      0.39119969882179423,
+      0.39119969882179423,
+      0.39119969882179423,
+      0.39119969882179423
+    ],
+    "frozen_mean_cost": 3.0,
+    "pass": true,
+    "shuffled_over_frozen": 1.8220950744849542,
+    "shuffled_traffic_mean_cost": 5.466285223454863,
+    "traffic": [
+      1024.0,
+      1024.0,
+      0.0,
+      1024.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "gate3_composition": {
+    "active_memory_adapted": {
+      "accuracy": 1.0,
+      "paid_pokes": 192,
+      "probe_cost": 67.93091516489764,
+      "surprises": 64
+    },
+    "active_memory_frozen": {
+      "accuracy": 1.0,
+      "paid_pokes": 192,
+      "probe_cost": 192.0,
+      "surprises": 64
+    },
+    "active_memory_shuffled_structure": {
+      "accuracy": 1.0,
+      "paid_pokes": 192,
+      "probe_cost": 349.84225430111115,
+      "surprises": 64
+    },
+    "active_no_memory_frozen": {
+      "accuracy": 1.0,
+      "paid_pokes": 1536,
+      "probe_cost": 1536.0,
+      "surprises": 512
+    },
+    "classification": "FAST_POKE_MEDIUM_MEMORY_AND_SLOW_STRUCTURE_COMPOSE",
+    "pass": true,
+    "passive_only_accuracy": 0.125
+  },
+  "schema": "alternative-neuron-gates-v1"
+}
