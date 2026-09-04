@@ -37,3 +37,5 @@ jobs:
         run: python -m experiments.gate7b_temporal_causal_separation --check
       - name: Gate 8A - WidePresent state aliasing
         run: python -m experiments.gate8a_wide_present --check
+      - name: Gate 8B - coordinate-invariant dynamical object
+        run: python -m experiments.gate8b_coordinate_invariant_object --check
